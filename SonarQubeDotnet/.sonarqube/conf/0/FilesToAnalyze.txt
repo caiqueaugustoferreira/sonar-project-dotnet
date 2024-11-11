@@ -1,0 +1,4 @@
+﻿C:\Users\CAIQAUG\Downloads\SonarQube\SonarQubeDotnet\SonarQubeDotnet\BankAccount.cs
+C:\Users\CAIQAUG\Downloads\SonarQube\SonarQubeDotnet\SonarQubeDotnet\Calculator.cs
+C:\Users\CAIQAUG\Downloads\SonarQube\SonarQubeDotnet\SonarQubeDotnet\OrderProcessor.cs
+C:\Users\CAIQAUG\Downloads\SonarQube\SonarQubeDotnet\SonarQubeDotnet\Program.cs

@@ -1,0 +1,6 @@
+projectKey=SonarQube-Dotnet
+serverUrl=http://localhost:9000
+serverVersion=10.7.0.96327
+dashboardUrl=http://localhost:9000/dashboard?id=SonarQube-Dotnet
+ceTaskId=cc1beeb5-c437-4cbd-8c1e-3f30f075529f
+ceTaskUrl=http://localhost:9000/api/ce/task?id=cc1beeb5-c437-4cbd-8c1e-3f30f075529f
