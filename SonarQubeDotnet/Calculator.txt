@@ -1,0 +1,121 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace CalculadoraSOLID
+{
+    // Interface para as operações
+    public interface IOperation
+    {
+        double Execute(double[] numbers);
+    }
+
+    // Operação de soma
+    public class Addition : IOperation
+    {
+        public double Execute(double[] numbers) => numbers.Sum();
+    }
+
+    // Operação de subtração
+    public class Subtraction : IOperation
+    {
+        public double Execute(double[] numbers) => numbers[0] - numbers[1];
+    }
+
+    // Operação de multiplicação
+    public class Multiplication : IOperation
+    {
+        public double Execute(double[] numbers) => numbers.Aggregate((result, number) => result * number);
+    }
+
+    // Operação de divisão com tratamento de divisão por zero
+    public class Division : IOperation
+    {
+        public double Execute(double[] numbers)
+        {
+            if (numbers[1] == 0)
+                throw new DivideByZeroException("O divisor não pode ser zero.");
+            return numbers[0] / numbers[1];
+        }
+    }
+
+    // Operação de porcentagem
+    public class Percentage : IOperation
+    {
+        public double Execute(double[] numbers) => numbers[0] * (numbers[1] / 100);
+    }
+
+    // Operação de média
+    public class Average : IOperation
+    {
+        public double Execute(double[] numbers) => numbers.Average();
+    }
+
+    // Operação de mediana
+    public class Median : IOperation
+    {
+        public double Execute(double[] numbers)
+        {
+            Array.Sort(numbers);
+            int count = numbers.Length;
+            if (count % 2 == 0)
+                return (numbers[count / 2 - 1] + numbers[count / 2]) / 2;
+            else
+                return numbers[count / 2];
+        }
+    }
+
+    // Classe Calculator que aplica o princípio de injeção de dependência e separação de responsabilidades
+    public class Calculator
+    {
+        private readonly Dictionary<string, IOperation> _operations;
+
+        public Calculator()
+        {
+            _operations = new Dictionary<string, IOperation>
+            {
+                { "+", new Addition() },
+                { "-", new Subtraction() },
+                { "*", new Multiplication() },
+                { "/", new Division() },
+                { "%", new Percentage() },
+                { "media", new Average() },
+                { "mediana", new Median() }
+            };
+        }
+
+        public double ExecuteOperation(string operation, double[] numbers)
+        {
+            if (!_operations.ContainsKey(operation))
+                throw new InvalidOperationException("Operação inválida!");
+
+            return _operations[operation].Execute(numbers);
+        }
+    }
+
+    // Programa principal com responsabilidade de interação com o usuário
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var calculator = new Calculator();
+
+            Console.WriteLine("Digite a operação desejada: (+, -, *, /, %, media, mediana)");
+            string operation = Console.ReadLine().Trim().ToLower();
+
+            Console.WriteLine("Digite os números separados por espaço:");
+            var inputNumbers = Console.ReadLine().Split(' ');
+            double[] numbers = Array.ConvertAll(inputNumbers, double.Parse);
+
+            try
+            {
+                double result = calculator.ExecuteOperation(operation, numbers);
+                Console.WriteLine("Resultado: " + result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro: " + ex.Message);
+            }
+        }
+    }
+}
