@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 
 namespace CalculadoraRuim
 {
-    public class Program
+    public static class Program
     {
         static void Main(string[] args)
         {
@@ -11,10 +10,16 @@ namespace CalculadoraRuim
             string operacao = Console.ReadLine();
 
             Console.WriteLine("Digite o primeiro número:");
-            double num1 = double.Parse(Console.ReadLine());
+            double.TryParse(Console.ReadLine(), out double num1);
 
             Console.WriteLine("Digite o segundo número (se aplicável):");
-            double num2 = double.Parse(Console.ReadLine());
+            double.TryParse(Console.ReadLine(), out double num2);
+
+            if (num1 == null || num2 == null)
+            {
+                Console.WriteLine("Os valores informados são inválidos");
+                return;
+            }
 
             double resultado = 0;
 
@@ -46,7 +51,8 @@ namespace CalculadoraRuim
             {
                 ArrayList lista = new ArrayList { num1, num2 };
                 lista.Sort();
-                resultado = (double)lista[lista.Count / 2];
+
+                resultado = (double?)lista[lista.Count / 2] ?? 0;
             }
             else
             {
