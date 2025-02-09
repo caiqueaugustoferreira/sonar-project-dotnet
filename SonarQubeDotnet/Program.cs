@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace CalculadoraRuim
+namespace SonarQubeDotnet
 {
     public static class Program
     {
@@ -21,6 +21,13 @@ namespace CalculadoraRuim
                 return;
             }
 
+            double resultado = Calcular(operacao, num1, num2);
+
+            Console.WriteLine("Resultado: " + resultado);
+        }
+
+        public static double Calcular(string operacao, double num1, double num2)
+        {
             double resultado = 0;
 
             if (operacao == "+")
@@ -56,10 +63,10 @@ namespace CalculadoraRuim
             }
             else
             {
-                Console.WriteLine("Operação inválida!");
+                throw new ArgumentException("Operação inválida!");
             }
 
-            Console.WriteLine("Resultado: " + resultado);
+            return resultado;
         }
     }
 }
